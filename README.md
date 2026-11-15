@@ -1,12 +1,14 @@
 # Zellij config reloader
 
-A headless Zellij WASM plugin that reloads the active configuration when it receives a pipe message.
+A headless Zellij WASM plugin that reloads the active configuration and requests reloads for plugins in its `load_plugins` block when it receives a pipe message.
 
 ## Compatibility
 
 The plugin pins `zellij-tile` 0.46.0. Build and run it with Zellij 0.46.0. Zellij 0.45.1 does not provide `reload_config_file()`.
 
-The plugin requests the `Reconfigure` permission when it loads. Grant this permission in the Zellij plugin configuration.
+The plugin requests the `Reconfigure` and `OpenTerminalsOrPlugins` permissions when it loads. Grant both permissions in the Zellij plugin configuration.
+
+The plugin reloads `load_plugins` entries that have no per-plugin `cwd` or configuration. It skips entries with those options and logs the reason because Zellij's plugin API accepts only a URL for this reload action. The plugin does not reload plugins loaded only by layouts or manual commands.
 
 ## Build
 
